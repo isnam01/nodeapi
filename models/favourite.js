@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 var favouriteSchema = new Schema(
     {
-        userId:{
+        user:{
             type: mongoose.Schema.Types.ObjectId,
             ref: 'User'
         },

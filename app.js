@@ -15,14 +15,20 @@ var dishRouter = require('./routes/dishRouter');
 var promoRouter = require('./routes/promoRouter');
 const uploadRouter = require('./routes/uploadRouter');
 var leaderRouter = require('./routes/leaderRouter');
+var feedbackRouter = require('./routes/feedbackRoute');
 var favRouter = require('./routes/favouriteRouter');
+var commentRouter = require('./routes/commentRouter');
 var app = express();
 
 const Dishes = require('./models/dishes');
 const mongoose = require('mongoose');
 const { base } = require('./models/dishes');
 const url = config.mongoUrl;
-const connect = mongoose.connect(url);
+const connect = mongoose.connect(url,
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
 
 connect.then((db)=>{
   console.log('Connected to the server successfully');
@@ -69,8 +75,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/dishes',dishRouter);
 app.use('/leaders',leaderRouter);
 app.use('/promotions',promoRouter);
+app.use('/feedback',feedbackRouter);
 app.use('/imageUpload',uploadRouter);
-app.use('/favourites',favRouter);
+app.use('/favorites',favRouter);
+app.use('/comments',commentRouter);
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
